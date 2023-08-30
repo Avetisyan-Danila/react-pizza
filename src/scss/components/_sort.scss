@@ -7,6 +7,7 @@
     align-items: center;
 
     svg {
+      transition: 0.3s;
       margin-right: 8px;
     }
 
@@ -18,6 +19,14 @@
       color: $orange;
       border-bottom: 1px dashed $orange;
       cursor: pointer;
+    }
+
+    &--desc svg {
+      transform: rotate(180deg);
+    }
+
+    &--asc svg {
+      transform: rotate(0deg);
     }
   }
 
