@@ -1,0 +1,74 @@
+.root {
+  position: relative;
+
+  max-width: 400px;
+  width: 100%;
+  margin-right: 100px;
+
+  &:hover {
+    .input {
+      border-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .icon {
+      opacity: 0.85;
+    }
+  }
+
+  .input {
+    width: 100%;
+    padding: 12px 20px 12px 40px;
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+    font-size: 16px;
+    transition: 0.3s;
+
+    &:focus {
+      border-color: rgba(0, 0, 0, 0.5);
+
+      & + .icon {
+        opacity: 0.85;
+      }
+    }
+  }
+
+  .icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 20px;
+    height: 20px;
+
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.3s;
+  }
+
+  .reset {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 20px;
+    height: 20px;
+
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.3s;
+    pointer-events: none;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  .reset_active {
+    pointer-events: all;
+    opacity: 0.5;
+  }
+}
