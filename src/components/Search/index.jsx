@@ -1,19 +1,37 @@
 import styles from "./Search.module.scss";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { SearchContext } from "../../App";
 
 function Search() {
   const { searchValue, setSearchValue } = useContext(SearchContext);
+  const [inputValue, setInputValue] = useState(searchValue);
 
-  // TODO: Сделать импорты изображений
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchValue(inputValue);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [inputValue, setSearchValue]);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleResetClick = () => {
+    setInputValue("");
+  };
+
   return (
     <div className={styles.root}>
       <input
         placeholder="Поиск пиццы . . ."
         type="text"
         className={styles.input}
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
+        value={inputValue}
+        onInput={handleInputChange}
       />
 
       <img
@@ -24,9 +42,9 @@ function Search() {
 
       <img
         className={`${styles.reset} ${
-          searchValue ? `${styles.reset_active}` : ""
+          inputValue ? `${styles.reset_active}` : ""
         }`}
-        onClick={() => setSearchValue("")}
+        onClick={handleResetClick}
         src="img/clear.svg"
         alt="Очистить строку поиска"
       />

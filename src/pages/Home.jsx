@@ -5,6 +5,7 @@ import PizzaBlock from "../components/PizzaBlock";
 import { useContext, useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
+import PizzasNotFound from "../components/PizzaBlock/PizzasNotFound";
 
 function Home() {
   const { searchValue } = useContext(SearchContext);
@@ -17,7 +18,6 @@ function Home() {
     sortProperty: "rating",
   });
 
-  // TODO: Сделать debounce для поиска
   useEffect(() => {
     const url = new URL("https://64e6699c09e64530d17ff99d.mockapi.io/items");
     if (categoryId > 0) url.searchParams.append("category", `${categoryId}`);
@@ -46,7 +46,6 @@ function Home() {
 
   const pizzas = items.map((item) => <PizzaBlock {...item} key={item.id} />);
 
-  // TODO: Добавить заглушку если не удалось найти пиццы по поиску
   return (
     <div className="container">
       <div className="content__top">
@@ -58,7 +57,11 @@ function Home() {
         <Sort value={sortType} onSelectSort={(type) => setSortType(type)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      {items.length === 0 ? (
+        <PizzasNotFound />
+      ) : (
+        <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      )}
       <Pagination onChangePage={(pageNumber) => setCurrentPage(pageNumber)} />
     </div>
   );
