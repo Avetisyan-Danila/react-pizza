@@ -44,7 +44,12 @@ function Home() {
     <Skeleton key={index} />
   ));
 
-  const pizzas = items.map((item) => <PizzaBlock {...item} key={item.id} />);
+  const pizzas =
+    items.length === 0 ? (
+      <PizzasNotFound />
+    ) : (
+      items.map((item) => <PizzaBlock {...item} key={item.id} />)
+    );
 
   return (
     <div className="container">
@@ -57,11 +62,9 @@ function Home() {
         <Sort value={sortType} onSelectSort={(type) => setSortType(type)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      {items.length === 0 ? (
-        <PizzasNotFound />
-      ) : (
-        <div className="content__items">{isLoading ? skeletons : pizzas}</div>
-      )}
+      <div className={`${items.length !== 0 ? "content__items" : ""}`}>
+        {isLoading ? skeletons : pizzas}
+      </div>
       <Pagination onChangePage={(pageNumber) => setCurrentPage(pageNumber)} />
     </div>
   );
