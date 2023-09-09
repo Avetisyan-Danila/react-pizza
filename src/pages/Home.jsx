@@ -7,6 +7,7 @@ import PizzasNotFound from "../components/PizzaBlock/PizzasNotFound";
 import { useContext, useEffect, useState } from "react";
 import { SearchContext } from "../App";
 import { useSelector } from "react-redux";
+import createItemsUrl from "../utils/createItemsUrl";
 
 function Home() {
   const { searchValue } = useContext(SearchContext);
@@ -17,16 +18,16 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const url = new URL("https://64e6699c09e64530d17ff99d.mockapi.io/items");
-    if (categoryId > 0) url.searchParams.append("category", `${categoryId}`);
-    if (searchValue) url.searchParams.append("search", `${searchValue}`);
-    url.searchParams.append("sortBy", `${sort.sortProperty}`);
-    url.searchParams.append("order", "desc");
-    url.searchParams.append("page", `${currentPage}`);
-    url.searchParams.append("limit", "8");
+    const itemsUrl = createItemsUrl(
+      "https://64e6699c09e64530d17ff99d.mockapi.io/items",
+      categoryId,
+      searchValue,
+      sort,
+      currentPage
+    );
 
     setIsLoading(true);
-    fetch(url)
+    fetch(itemsUrl)
       .then((res) => {
         return res.json();
       })
@@ -56,7 +57,6 @@ function Home() {
       </div>
 
       <h2 className="content__title">Все пиццы</h2>
-
       <div className={`${items.length !== 0 ? "content__items" : ""}`}>
         {isLoading ? skeletons : pizzas}
       </div>
