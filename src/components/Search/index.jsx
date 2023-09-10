@@ -1,15 +1,16 @@
 import styles from "./Search.module.scss";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { SearchContext } from "../../App";
 
 function Search() {
   const { searchValue, setSearchValue } = useContext(SearchContext);
   const [inputValue, setInputValue] = useState(searchValue);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setSearchValue(inputValue);
-    }, 500);
+    }, 350);
 
     return () => {
       clearTimeout(timer);
@@ -22,6 +23,7 @@ function Search() {
 
   const handleResetClick = () => {
     setInputValue("");
+    inputRef.current.focus();
   };
 
   return (
@@ -29,6 +31,7 @@ function Search() {
       <input
         placeholder="Поиск пиццы . . ."
         type="text"
+        ref={inputRef}
         className={styles.input}
         value={inputValue}
         onInput={handleInputChange}
