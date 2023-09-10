@@ -4,19 +4,22 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import PizzasNotFound from "../components/PizzaBlock/PizzasNotFound";
-import { useContext, useEffect, useState } from "react";
-import { SearchContext } from "../App";
-import { useSelector } from "react-redux";
 import createItemsUrl from "../utils/createItemsUrl";
 import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { SearchContext } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../redux/slices/filterSlice";
 
 function Home() {
   const { searchValue } = useContext(SearchContext);
-  const { categoryId, sort } = useSelector((state) => state.filter);
+  const { categoryId, sort, currentPage } = useSelector(
+    (state) => state.filter
+  );
+  const dispatch = useDispatch();
 
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const itemsUrl = createItemsUrl(categoryId, searchValue, sort, currentPage);
@@ -29,6 +32,10 @@ function Home() {
 
     window.scrollTo(0, 0);
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+
+  const onChangePage = (number) => {
+    dispatch(setCurrentPage(number));
+  };
 
   const skeletons = [...new Array(8)].map((_, index) => (
     <Skeleton key={index} />
@@ -52,7 +59,7 @@ function Home() {
         {isLoading ? skeletons : pizzas}
       </div>
 
-      <Pagination onChangePage={(pageNumber) => setCurrentPage(pageNumber)} />
+      <Pagination onChangePage={onChangePage} />
     </div>
   );
 }
