@@ -53,7 +53,7 @@ function Home() {
         {isLoading ? skeletons : pizzas}
       </div>
 
-      <Pagination />
+      {categoryId === 0 ? <Pagination /> : ""}
     </div>
   );
 }
