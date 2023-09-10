@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { SearchContext } from "../App";
 import { useSelector } from "react-redux";
 import createItemsUrl from "../utils/createItemsUrl";
+import axios from "axios";
 
 function Home() {
   const { searchValue } = useContext(SearchContext);
@@ -18,23 +19,13 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const itemsUrl = createItemsUrl(
-      "https://64e6699c09e64530d17ff99d.mockapi.io/items",
-      categoryId,
-      searchValue,
-      sort,
-      currentPage
-    );
+    const itemsUrl = createItemsUrl(categoryId, searchValue, sort, currentPage);
 
     setIsLoading(true);
-    fetch(itemsUrl)
-      .then((res) => {
-        return res.json();
-      })
-      .then((arr) => {
-        setItems(arr);
-        setIsLoading(false);
-      });
+    axios.get(itemsUrl).then((res) => {
+      setItems(res.data);
+      setIsLoading(false);
+    });
 
     window.scrollTo(0, 0);
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
