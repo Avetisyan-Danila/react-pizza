@@ -8,15 +8,13 @@ import createItemsUrl from "../utils/createItemsUrl";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { SearchContext } from "../App";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPage } from "../redux/slices/filterSlice";
+import { useSelector } from "react-redux";
 
 function Home() {
   const { searchValue } = useContext(SearchContext);
   const { categoryId, sort, currentPage } = useSelector(
     (state) => state.filter
   );
-  const dispatch = useDispatch();
 
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,10 +30,6 @@ function Home() {
 
     window.scrollTo(0, 0);
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
-
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
-  };
 
   const skeletons = [...new Array(8)].map((_, index) => (
     <Skeleton key={index} />
@@ -59,7 +53,7 @@ function Home() {
         {isLoading ? skeletons : pizzas}
       </div>
 
-      <Pagination onChangePage={onChangePage} />
+      <Pagination />
     </div>
   );
 }

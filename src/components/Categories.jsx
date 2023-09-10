@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId } from "../redux/slices/filterSlice";
+import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
 
 function Categories() {
   const categoryId = useSelector((state) => state.filter.categoryId);
@@ -14,12 +14,17 @@ function Categories() {
     "Закрытые",
   ];
 
+  const handleCategoryClick = (index) => {
+    dispatch(setCategoryId(index));
+    dispatch(setCurrentPage(1));
+  };
+
   return (
     <div className="categories">
       <ul>
         {categories.map((categoryName, index) => (
           <li
-            onClick={() => dispatch(setCategoryId(index))}
+            onClick={() => handleCategoryClick(index)}
             className={categoryId === index ? "active" : ""}
             key={categoryName}
           >
