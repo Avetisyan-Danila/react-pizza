@@ -8,8 +8,7 @@ import createItemsUrl from "../utils/createItemsUrl";
 import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react";
-import { SearchContext } from "../App";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilters } from "../redux/slices/filterSlice";
 import { sortItems } from "../helpers/constants";
@@ -20,9 +19,7 @@ function Home() {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  // TODO: Переделать на redux
-  const { searchValue } = useContext(SearchContext);
-  const { categoryId, sort, currentPage } = useSelector(
+  const { categoryId, sort, currentPage, searchQuery } = useSelector(
     (state) => state.filter
   );
 
@@ -30,7 +27,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchPizzas = () => {
-    const itemsUrl = createItemsUrl(categoryId, searchValue, sort, currentPage);
+    const itemsUrl = createItemsUrl(categoryId, searchQuery, sort, currentPage);
 
     setIsLoading(true);
     axios.get(itemsUrl).then((res) => {
@@ -54,7 +51,7 @@ function Home() {
     }
 
     isMounted.current = true;
-  }, [categoryId, sort, searchValue, currentPage]);
+  }, [categoryId, sort, searchQuery, currentPage]);
 
   // Если был первый рендер, то проверяем URL-параметры и сохраняем в redux
   useEffect(() => {
@@ -82,7 +79,7 @@ function Home() {
     }
 
     isSearch.current = false;
-  }, [categoryId, sort, searchValue, currentPage]);
+  }, [categoryId, sort, searchQuery, currentPage]);
 
   const skeletons = [...new Array(8)].map((_, index) => (
     <Skeleton key={index} />

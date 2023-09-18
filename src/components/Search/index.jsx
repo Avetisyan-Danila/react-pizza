@@ -1,21 +1,24 @@
 import styles from "./Search.module.scss";
-import { useContext, useState, useEffect, useRef } from "react";
-import { SearchContext } from "../../App";
+import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchQuery } from "../../redux/slices/filterSlice";
 
 function Search() {
-  const { searchValue, setSearchValue } = useContext(SearchContext);
-  const [inputValue, setInputValue] = useState(searchValue);
+  const { searchQuery } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+
+  const [inputValue, setInputValue] = useState(searchQuery);
   const inputRef = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setSearchValue(inputValue);
+      dispatch(setSearchQuery(inputValue));
     }, 350);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [inputValue, setSearchValue]);
+  }, [inputValue]);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
