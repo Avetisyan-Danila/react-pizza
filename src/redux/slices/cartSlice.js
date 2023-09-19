@@ -43,6 +43,16 @@ export const cartSlice = createSlice({
       );
 
       state.items.splice(pizzaIndex, 1);
+
+      state.totalPrice = state.items.reduce(
+        (acc, pizza) => pizza.price * pizza.count + acc,
+        0
+      );
+
+      state.totalCount = state.items.reduce(
+        (acc, pizza) => acc + pizza.count,
+        0
+      );
     },
     increasePizzas(state, action) {
       const pizzaIndex = state.items.findIndex(
