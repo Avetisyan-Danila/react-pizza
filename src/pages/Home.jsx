@@ -27,10 +27,10 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchPizzas = () => {
-    const itemsUrl = createItemsUrl(categoryId, searchQuery, sort, currentPage);
+    const url = createItemsUrl(categoryId, searchQuery, sort, currentPage);
 
     setIsLoading(true);
-    axios.get(itemsUrl).then((res) => {
+    axios.get(url).then((res) => {
       setItems(res.data);
       setIsLoading(false);
     });
