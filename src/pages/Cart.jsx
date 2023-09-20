@@ -2,12 +2,17 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearPizzas } from "../redux/slices/cartSlice";
 import CartPizzaBlock from "../components/CartPizzaBlock";
+import CartEmpty from "../components/CartEmpty";
 
 function Cart() {
   const { items, totalPrice, totalCount } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
   const handleClearClick = () => dispatch(clearPizzas());
+
+  if (totalCount === 0) {
+    return <CartEmpty />;
+  }
 
   return (
     <div className="container container--cart">
