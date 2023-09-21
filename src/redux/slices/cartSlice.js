@@ -24,6 +24,7 @@ export const cartSlice = createSlice({
         state.items.push({ ...action.payload, count: 1 });
       }
 
+      // TODO: Мб можно вынести в общую функцию и переиспользовать тут и ниже
       state.totalPrice = state.items.reduce(
         (acc, pizza) => pizza.price * pizza.count + acc,
         0
