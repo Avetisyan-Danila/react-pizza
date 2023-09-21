@@ -6,94 +6,70 @@ const initialState = {
   totalCount: 0,
 };
 
+const calculateTotalPriceAndCount = (items) => {
+  const totalPrice = items.reduce(
+    (acc, pizza) => pizza.price * pizza.count + acc,
+    0
+  );
+  const totalCount = items.reduce((acc, pizza) => acc + pizza.count, 0);
+  return { totalPrice, totalCount };
+};
+
+const findPizzaIndex = (items, payload) =>
+  items.findIndex(
+    (pizza) =>
+      pizza.id === payload.id &&
+      pizza.type === payload.type &&
+      pizza.size === payload.size
+  );
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addPizza(state, action) {
-      const pizzaIndex = state.items.findIndex(
-        (pizza) =>
-          pizza.id === action.payload.id &&
-          pizza.type === action.payload.type &&
-          pizza.size === action.payload.size
-      );
-
+      const pizzaIndex = findPizzaIndex(state.items, action.payload);
       if (~pizzaIndex) {
         state.items[pizzaIndex].count++;
       } else {
         state.items.push({ ...action.payload, count: 1 });
       }
 
-      // TODO: Мб можно вынести в общую функцию и переиспользовать тут и ниже
-      state.totalPrice = state.items.reduce(
-        (acc, pizza) => pizza.price * pizza.count + acc,
-        0
+      const { totalPrice, totalCount } = calculateTotalPriceAndCount(
+        state.items
       );
-
-      state.totalCount = state.items.reduce(
-        (acc, pizza) => acc + pizza.count,
-        0
-      );
+      state.totalPrice = totalPrice;
+      state.totalCount = totalCount;
     },
     removePizza(state, action) {
-      const pizzaIndex = state.items.findIndex(
-        (pizza) =>
-          pizza.id === action.payload.id &&
-          pizza.type === action.payload.type &&
-          pizza.size === action.payload.size
-      );
-
+      const pizzaIndex = findPizzaIndex(state.items, action.payload);
       state.items.splice(pizzaIndex, 1);
 
-      state.totalPrice = state.items.reduce(
-        (acc, pizza) => pizza.price * pizza.count + acc,
-        0
+      const { totalPrice, totalCount } = calculateTotalPriceAndCount(
+        state.items
       );
-
-      state.totalCount = state.items.reduce(
-        (acc, pizza) => acc + pizza.count,
-        0
-      );
+      state.totalPrice = totalPrice;
+      state.totalCount = totalCount;
     },
     increasePizzas(state, action) {
-      const pizzaIndex = state.items.findIndex(
-        (pizza) =>
-          pizza.id === action.payload.id &&
-          pizza.type === action.payload.type &&
-          pizza.size === action.payload.size
-      );
-
+      const pizzaIndex = findPizzaIndex(state.items, action.payload);
       state.items[pizzaIndex].count++;
 
-      state.totalPrice = state.items.reduce(
-        (acc, pizza) => pizza.price * pizza.count + acc,
-        0
+      const { totalPrice, totalCount } = calculateTotalPriceAndCount(
+        state.items
       );
-
-      state.totalCount = state.items.reduce(
-        (acc, pizza) => acc + pizza.count,
-        0
-      );
+      state.totalPrice = totalPrice;
+      state.totalCount = totalCount;
     },
     decreasePizzas(state, action) {
-      const pizzaIndex = state.items.findIndex(
-        (pizza) =>
-          pizza.id === action.payload.id &&
-          pizza.type === action.payload.type &&
-          pizza.size === action.payload.size
-      );
-
+      const pizzaIndex = findPizzaIndex(state.items, action.payload);
       state.items[pizzaIndex].count--;
 
-      state.totalPrice = state.items.reduce(
-        (acc, pizza) => pizza.price * pizza.count + acc,
-        0
+      const { totalPrice, totalCount } = calculateTotalPriceAndCount(
+        state.items
       );
-
-      state.totalCount = state.items.reduce(
-        (acc, pizza) => acc + pizza.count,
-        0
-      );
+      state.totalPrice = totalPrice;
+      state.totalCount = totalCount;
     },
     clearPizzas(state) {
       state.items = [];
