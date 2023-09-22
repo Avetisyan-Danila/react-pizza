@@ -1,8 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
+import {
+  filterSelector,
+  setCategoryId,
+  setCurrentPage,
+} from "../redux/slices/filterSlice";
 
 function Categories() {
-  const categoryId = useSelector((state) => state.filter.categoryId);
+  const { categoryId } = useSelector(filterSelector);
   const dispatch = useDispatch();
 
   const categories = [

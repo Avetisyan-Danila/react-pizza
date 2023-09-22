@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearPizzas } from "../redux/slices/cartSlice";
+import { cartSelector, clearPizzas } from "../redux/slices/cartSlice";
 import CartPizzaBlock from "../components/CartPizzaBlock";
 import CartEmpty from "../components/CartEmpty";
 
 function Cart() {
-  const { items, totalPrice, totalCount } = useSelector((state) => state.cart);
+  const { items, totalPrice, totalCount } = useSelector(cartSelector);
 
   const dispatch = useDispatch();
   const handleClearClick = () => dispatch(clearPizzas());

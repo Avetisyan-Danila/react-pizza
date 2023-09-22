@@ -8,9 +8,9 @@ import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilters } from "../redux/slices/filterSlice";
+import { filterSelector, setFilters } from "../redux/slices/filterSlice";
 import { sortItems } from "../helpers/constants";
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas, pizzasSelector } from "../redux/slices/pizzasSlice";
 
 function Home() {
   const navigate = useNavigate();
@@ -19,10 +19,9 @@ function Home() {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { items, status } = useSelector((state) => state.pizzas);
-  const { categoryId, sort, currentPage, searchQuery } = useSelector(
-    (state) => state.filter
-  );
+  const { items, status } = useSelector(pizzasSelector);
+  const { categoryId, sort, currentPage, searchQuery } =
+    useSelector(filterSelector);
 
   const getPizzas = () => {
     dispatch(fetchPizzas({ categoryId, searchQuery, sort, currentPage }));

@@ -4,7 +4,7 @@ import createItemsUrl from "../../utils/createItemsUrl";
 
 export const fetchPizzas = createAsyncThunk(
   "pizzas/fetchPizzasStatus",
-  async (params) => {
+  async (params, thunkAPI) => {
     const { categoryId, searchQuery, sort, currentPage } = params;
     const url = createItemsUrl(categoryId, searchQuery, sort, currentPage);
     const { data } = await axios.get(url);
@@ -14,7 +14,7 @@ export const fetchPizzas = createAsyncThunk(
 
 const initialState = {
   items: [],
-  status: "loading", // loading | success | error
+  status: "idle" | "pending" | "success" | "error",
 };
 
 export const pizzasSlice = createSlice({
@@ -40,6 +40,8 @@ export const pizzasSlice = createSlice({
     },
   },
 });
+
+export const pizzasSelector = (state) => state.pizzas;
 
 export const { setItems } = pizzasSlice.actions;
 
