@@ -181,6 +181,17 @@ body {
             display: none;
           }
         }
+
+        &:disabled {
+          pointer-events: none;
+          border-color: #777777;
+
+          svg {
+            path {
+              fill: #777777;
+            }
+          }
+        }
       }
 
       b {

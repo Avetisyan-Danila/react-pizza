@@ -28,8 +28,11 @@ const CartPizzaBlock: React.FC<CartPizzaBlockProps> = (pizza) => {
     dispatch(increasePizzas(pizza));
 
   // TODO: Передавать можно только id, а не весь объект пиццы
-  const handleDecreaseClick = (pizza: CartPizzaBlockProps) =>
+  const handleDecreaseClick = (pizza: CartPizzaBlockProps) => {
+    if (pizza.count === 1) return;
+
     dispatch(decreasePizzas(pizza));
+  };
 
   return (
     <div key={`${pizza.size}+${pizza.type}`} className="cart__item">
@@ -43,7 +46,8 @@ const CartPizzaBlock: React.FC<CartPizzaBlockProps> = (pizza) => {
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
+          disabled={pizza.count === 1}
           onClick={() => handleDecreaseClick(pizza)}
           className="button button--outline button--circle cart__item-count-minus"
         >
@@ -63,9 +67,9 @@ const CartPizzaBlock: React.FC<CartPizzaBlockProps> = (pizza) => {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{pizza.count}</b>
-        <div
+        <button
           onClick={() => handleIncreaseClick(pizza)}
           className="button button--outline button--circle cart__item-count-plus"
         >
@@ -85,7 +89,7 @@ const CartPizzaBlock: React.FC<CartPizzaBlockProps> = (pizza) => {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{pizza.price * pizza.count} ₽</b>
