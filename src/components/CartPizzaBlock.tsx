@@ -4,12 +4,32 @@ import {
   removePizza,
 } from "../redux/slices/cartSlice";
 import { useDispatch } from "react-redux";
+import React from "react";
 
-function CartPizzaBlock(pizza) {
+export type CartPizzaBlockProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  type: string;
+  size: number;
+  count: number;
+};
+
+const CartPizzaBlock: React.FC<CartPizzaBlockProps> = (pizza) => {
   const dispatch = useDispatch();
-  const handleRemoveClick = (pizza) => dispatch(removePizza(pizza));
-  const handleIncreaseClick = (pizza) => dispatch(increasePizzas(pizza));
-  const handleDecreaseClick = (pizza) => dispatch(decreasePizzas(pizza));
+
+  // TODO: Передавать можно только id, а не весь объект пиццы
+  const handleRemoveClick = (pizza: CartPizzaBlockProps) =>
+    dispatch(removePizza(pizza));
+
+  // TODO: Передавать можно только id, а не весь объект пиццы
+  const handleIncreaseClick = (pizza: CartPizzaBlockProps) =>
+    dispatch(increasePizzas(pizza));
+
+  // TODO: Передавать можно только id, а не весь объект пиццы
+  const handleDecreaseClick = (pizza: CartPizzaBlockProps) =>
+    dispatch(decreasePizzas(pizza));
 
   return (
     <div key={`${pizza.size}+${pizza.type}`} className="cart__item">
@@ -68,7 +88,7 @@ function CartPizzaBlock(pizza) {
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{pizza.price} ₽</b>
+        <b>{pizza.price * pizza.count} ₽</b>
       </div>
       <div className="cart__item-remove">
         <button
@@ -95,6 +115,6 @@ function CartPizzaBlock(pizza) {
       </div>
     </div>
   );
-}
+};
 
 export default CartPizzaBlock;

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import React from "react";
 
-function CartEmpty() {
+const CartEmpty: React.FC = () => {
   return (
     <div className="container container--cart">
       <div className="cart cart--empty">
@@ -17,6 +18,6 @@ function CartEmpty() {
       </div>
     </div>
   );
-}
+};
 
 export default CartEmpty;

@@ -1,14 +1,14 @@
 import styles from "./Search.module.scss";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterSelector, setSearchQuery } from "../../redux/slices/filterSlice";
 
-function Search() {
+const Search: React.FC = () => {
   const { searchQuery } = useSelector(filterSelector);
   const dispatch = useDispatch();
 
   const [inputValue, setInputValue] = useState(searchQuery);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -20,13 +20,13 @@ function Search() {
     };
   }, [inputValue]);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
   const handleResetClick = () => {
     setInputValue("");
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (
@@ -37,7 +37,7 @@ function Search() {
         ref={inputRef}
         className={styles.input}
         value={inputValue}
-        onInput={handleInputChange}
+        onChange={handleInputChange}
       />
 
       <img
@@ -56,6 +56,6 @@ function Search() {
       />
     </div>
   );
-}
+};
 
 export default Search;

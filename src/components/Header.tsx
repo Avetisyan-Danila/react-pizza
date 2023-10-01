@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import Search from "./Search";
 import { useSelector } from "react-redux";
 import { cartSelector } from "../redux/slices/cartSlice";
+// TODO: Переделать везде картинки на импорты
+import logoSvg from "../assets/pizza-logo.svg";
+import React from "react";
 
-function Header() {
+const Header: React.FC = () => {
   const { totalPrice, totalCount } = useSelector(cartSelector);
 
   return (
@@ -11,7 +14,7 @@ function Header() {
       <div className="container">
         <Link to="/">
           <div className="header__logo">
-            <img width="38" src="img/pizza-logo.svg" alt="Pizza logo" />
+            <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>
               <h1>React Pizza</h1>
               <p>самая вкусная пицца во вселенной</p>
@@ -32,6 +35,6 @@ function Header() {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

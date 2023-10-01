@@ -1,12 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-const initialState = {
+export type CartItem = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  type: string;
+  size: number;
+  count: number;
+};
+
+interface CartSliceState {
+  items: CartItem[];
+  totalPrice: number;
+  totalCount: number;
+}
+
+const initialState: CartSliceState = {
   items: [],
   totalPrice: 0,
   totalCount: 0,
 };
 
-const calculateTotalPriceAndCount = (items) => {
+const calculateTotalPriceAndCount = (items: CartItem[]) => {
   const totalPrice = items.reduce(
     (acc, pizza) => pizza.price * pizza.count + acc,
     0
@@ -15,7 +32,7 @@ const calculateTotalPriceAndCount = (items) => {
   return { totalPrice, totalCount };
 };
 
-const findPizzaIndex = (items, payload) =>
+const findPizzaIndex = (items: CartItem[], payload: CartItem) =>
   items.findIndex(
     (pizza) =>
       pizza.id === payload.id &&
@@ -27,7 +44,7 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addPizza(state, action) {
+    addPizza(state, action: PayloadAction<CartItem>) {
       const pizzaIndex = findPizzaIndex(state.items, action.payload);
       if (~pizzaIndex) {
         state.items[pizzaIndex].count++;
@@ -41,7 +58,7 @@ export const cartSlice = createSlice({
       state.totalPrice = totalPrice;
       state.totalCount = totalCount;
     },
-    removePizza(state, action) {
+    removePizza(state, action: PayloadAction<CartItem>) {
       const pizzaIndex = findPizzaIndex(state.items, action.payload);
       state.items.splice(pizzaIndex, 1);
 
@@ -51,7 +68,7 @@ export const cartSlice = createSlice({
       state.totalPrice = totalPrice;
       state.totalCount = totalCount;
     },
-    increasePizzas(state, action) {
+    increasePizzas(state, action: PayloadAction<CartItem>) {
       const pizzaIndex = findPizzaIndex(state.items, action.payload);
       state.items[pizzaIndex].count++;
 
@@ -61,7 +78,7 @@ export const cartSlice = createSlice({
       state.totalPrice = totalPrice;
       state.totalCount = totalCount;
     },
-    decreasePizzas(state, action) {
+    decreasePizzas(state, action: PayloadAction<CartItem>) {
       const pizzaIndex = findPizzaIndex(state.items, action.payload);
       state.items[pizzaIndex].count--;
 
@@ -79,7 +96,9 @@ export const cartSlice = createSlice({
   },
 });
 
-export const cartSelector = (state) => state.cart;
+export const cartSelector = (state: RootState) => state.cart;
+export const selectCartItemById = (id: number) => (state: RootState) =>
+  state.cart.items.filter((pizza: CartItem) => pizza.id === id);
 
 export const {
   addPizza,

@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartSelector, clearPizzas } from "../redux/slices/cartSlice";
 import CartPizzaBlock from "../components/CartPizzaBlock";
 import CartEmpty from "../components/CartEmpty";
+import React from "react";
+import { CartPizzaBlockProps } from "../components/CartPizzaBlock";
 
-function Cart() {
+const Cart: React.FC = () => {
   const { items, totalPrice, totalCount } = useSelector(cartSelector);
 
   const dispatch = useDispatch();
   const handleClearClick = () => dispatch(clearPizzas());
 
+  // TODO: добавь 2 пиццы и убавь количество одной до нуля
   if (totalCount === 0) {
     return <CartEmpty />;
   }
@@ -92,7 +95,7 @@ function Cart() {
           </button>
         </div>
         <div className="content__items">
-          {items.map((pizza) => (
+          {items.map((pizza: CartPizzaBlockProps) => (
             <CartPizzaBlock {...pizza} key={`${pizza.size}+${pizza.type}`} />
           ))}
         </div>
@@ -138,6 +141,6 @@ function Cart() {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;

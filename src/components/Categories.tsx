@@ -4,21 +4,22 @@ import {
   setCategoryId,
   setCurrentPage,
 } from "../redux/slices/filterSlice";
+import React from "react";
 
-function Categories() {
+const categories: string[] = [
+  "Все",
+  "Мясные",
+  "Вегетарианская",
+  "Гриль",
+  "Острые",
+  "Закрытые",
+];
+
+const Categories: React.FC = () => {
   const { categoryId } = useSelector(filterSelector);
   const dispatch = useDispatch();
 
-  const categories = [
-    "Все",
-    "Мясные",
-    "Вегетарианская",
-    "Гриль",
-    "Острые",
-    "Закрытые",
-  ];
-
-  const handleCategoryClick = (index) => {
+  const handleCategoryClick = (index: number) => {
     dispatch(setCategoryId(index));
     dispatch(setCurrentPage(1));
   };
@@ -26,7 +27,7 @@ function Categories() {
   return (
     <div className="categories">
       <ul>
-        {categories.map((categoryName, index) => (
+        {categories.map((categoryName: string, index: number) => (
           <li
             onClick={() => handleCategoryClick(index)}
             className={categoryId === index ? "active" : ""}
@@ -38,6 +39,6 @@ function Categories() {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;

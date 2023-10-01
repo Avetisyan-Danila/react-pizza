@@ -1,23 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterSelector, setSort } from "../redux/slices/filterSlice";
-import { sortItems } from "../helpers/constants";
+import { sortItems, SortItem } from "../helpers/constants";
 
-function Sort() {
+const Sort: React.FC = () => {
   const { sort } = useSelector(filterSelector);
   const dispatch = useDispatch();
 
   const [isVisible, setIsVisible] = useState(false);
-  const handleSortItemClick = (item) => {
+  const handleSortItemClick = (item: SortItem) => {
     dispatch(setSort(item));
     setIsVisible(false);
   };
 
-  const sortRef = useRef();
-
+  const sortRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (!e.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (sortRef.current && !e.composedPath().includes(sortRef.current)) {
         setIsVisible(false);
       }
     };
@@ -29,6 +28,7 @@ function Sort() {
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label sort__label--desc">
+        {/*TODO: Доделать сортировку по возрастанию/убыванию*/}
         <svg
           width="10"
           height="6"
@@ -63,6 +63,6 @@ function Sort() {
       )}
     </div>
   );
-}
+};
 
 export default Sort;

@@ -1,20 +1,26 @@
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
-import PizzaBlock from "../components/PizzaBlock";
+import PizzaBlock, { PizzaBlockProps } from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import PizzasNotFound from "../components/PizzaBlock/PizzasNotFound";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { filterSelector, setFilters } from "../redux/slices/filterSlice";
 import { sortItems } from "../helpers/constants";
-import { fetchPizzas, pizzasSelector } from "../redux/slices/pizzasSlice";
+import {
+  FetchPizzaArgs,
+  fetchPizzas,
+  pizzasSelector,
+} from "../redux/slices/pizzasSlice";
+import { useAppDispatch } from "../redux/store";
 
-function Home() {
+const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // TODO: Заменить все useDispatch на useAppDispatch
+  const dispatch = useAppDispatch();
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -24,7 +30,14 @@ function Home() {
     useSelector(filterSelector);
 
   const getPizzas = () => {
-    dispatch(fetchPizzas({ categoryId, searchQuery, sort, currentPage }));
+    dispatch(
+      fetchPizzas({
+        categoryId,
+        searchQuery,
+        sortBy: sort.sortProperty,
+        currentPage,
+      })
+    );
     window.scrollTo(0, 0);
   };
 
@@ -46,21 +59,24 @@ function Home() {
   // Если был первый рендер, то проверяем URL-параметры и сохраняем в redux
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const sort = sortItems.find(
-        (obj) => obj.sortProperty === params.sortProperty
-      );
+      // TODO: Заменить на useLocation из реакта
+      const params = qs.parse(
+        window.location.search.substring(1)
+      ) as unknown as FetchPizzaArgs;
+
+      const sort = sortItems.find((obj) => obj.sortProperty === params.sortBy);
 
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          categoryId: params.categoryId,
+          currentPage: params.currentPage,
+          sort: sort || sortItems[0],
+          searchQuery: params.searchQuery,
         })
       );
-
       isSearch.current = true;
     }
-  }, [dispatch]);
+  }, []);
 
   // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
@@ -76,7 +92,7 @@ function Home() {
   ));
 
   const pizzas = items.length ? (
-    items.map((item) => <PizzaBlock {...item} key={item.id} />)
+    items.map((item: PizzaBlockProps) => <PizzaBlock {...item} key={item.id} />)
   ) : (
     <PizzasNotFound />
   );
@@ -88,6 +104,7 @@ function Home() {
         <Sort />
       </div>
 
+      {/*TODO: Сделать ошибку красивой*/}
       {status === "error" ? (
         <div>ошибка</div>
       ) : (
@@ -101,6 +118,6 @@ function Home() {
       )}
     </div>
   );
-}
+};
 
 export default Home;
