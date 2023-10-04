@@ -5,7 +5,7 @@ import PizzaBlock, { PizzaBlockProps } from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import PizzasNotFound from "../components/PizzaBlock/PizzasNotFound";
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { filterSelector, setFilters } from "../redux/slices/filterSlice";
@@ -19,6 +19,7 @@ import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
   const isSearch = useRef(false);
@@ -57,11 +58,8 @@ const Home: React.FC = () => {
 
   // Если был первый рендер, то проверяем URL-параметры и сохраняем в redux
   useEffect(() => {
-    if (window.location.search) {
-      // TODO: Заменить на useLocation из реакта
-      const params = qs.parse(
-        window.location.search.substring(1)
-      ) as unknown as FetchPizzaArgs;
+    if (location.search) {
+      const params = qs.parse(location.search) as unknown as FetchPizzaArgs;
 
       const sort = sortItems.find((obj) => obj.sortProperty === params.sortBy);
 

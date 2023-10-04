@@ -8,7 +8,6 @@ import React from "react";
 
 const Header: React.FC = () => {
   const location = useLocation();
-  console.log(location);
   const { totalPrice, totalCount } = useSelector(cartSelector);
 
   return (

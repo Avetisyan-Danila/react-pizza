@@ -42,7 +42,6 @@ export const filterSlice = createSlice({
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload;
     },
-    // TODO: Не уверен насчет типа, тк вроде не передаю searchQuery
     setFilters(state, action: PayloadAction<FilterSliceState>) {
       state.categoryId = Number(action.payload.categoryId);
       state.currentPage = Number(action.payload.currentPage);
