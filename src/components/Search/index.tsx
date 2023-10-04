@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterSelector, setSearchQuery } from "../../redux/slices/filterSlice";
 
-// TODO: Убрать поиск в корзине
 const Search: React.FC = () => {
   const { searchQuery } = useSelector(filterSelector);
   const dispatch = useDispatch();
