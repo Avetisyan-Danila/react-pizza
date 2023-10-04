@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { cartSelector, clearPizzas } from "../redux/slices/cartSlice";
 import CartPizzaBlock from "../components/CartPizzaBlock";
 import CartEmpty from "../components/CartEmpty";
 import React from "react";
 import { CartPizzaBlockProps } from "../components/CartPizzaBlock";
+import { useAppDispatch } from "../redux/store";
 
 const Cart: React.FC = () => {
   const { items, totalPrice, totalCount } = useSelector(cartSelector);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleClearClick = () => dispatch(clearPizzas());
 
   if (totalCount === 0) {

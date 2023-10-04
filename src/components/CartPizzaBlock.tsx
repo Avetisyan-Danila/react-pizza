@@ -3,8 +3,8 @@ import {
   increasePizzas,
   removePizza,
 } from "../redux/slices/cartSlice";
-import { useDispatch } from "react-redux";
 import React from "react";
+import { useAppDispatch } from "../redux/store";
 
 export type CartPizzaBlockProps = {
   id: number;
@@ -17,7 +17,7 @@ export type CartPizzaBlockProps = {
 };
 
 const CartPizzaBlock: React.FC<CartPizzaBlockProps> = (pizza) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // TODO: Передавать можно только id, а не весь объект пиццы
   const handleRemoveClick = (pizza: CartPizzaBlockProps) =>

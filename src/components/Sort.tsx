@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { filterSelector, setSort } from "../redux/slices/filterSlice";
 import { sortItems, SortItem } from "../helpers/constants";
+import { useAppDispatch } from "../redux/store";
 
 const Sort: React.FC = () => {
   const { sort } = useSelector(filterSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [isVisible, setIsVisible] = useState(false);
   const handleSortItemClick = (item: SortItem) => {

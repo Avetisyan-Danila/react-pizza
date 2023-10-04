@@ -1,11 +1,12 @@
 import styles from "./Search.module.scss";
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { filterSelector, setSearchQuery } from "../../redux/slices/filterSlice";
+import { useAppDispatch } from "../../redux/store";
 
 const Search: React.FC = () => {
   const { searchQuery } = useSelector(filterSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [inputValue, setInputValue] = useState(searchQuery);
   const inputRef = useRef<HTMLInputElement>(null);

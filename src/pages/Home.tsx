@@ -19,7 +19,6 @@ import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  // TODO: Заменить все useDispatch на useAppDispatch
   const dispatch = useAppDispatch();
 
   const isSearch = useRef(false);

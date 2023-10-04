@@ -1,10 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   filterSelector,
   setCategoryId,
   setCurrentPage,
 } from "../redux/slices/filterSlice";
 import React from "react";
+import { useAppDispatch } from "../redux/store";
 
 const categories: string[] = [
   "Все",
@@ -17,7 +18,7 @@ const categories: string[] = [
 
 const Categories: React.FC = () => {
   const { categoryId } = useSelector(filterSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleCategoryClick = (index: number) => {
     dispatch(setCategoryId(index));

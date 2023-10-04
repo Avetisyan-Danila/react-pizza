@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   addPizza,
   CartItem,
   selectCartItemById,
 } from "../../redux/slices/cartSlice";
 import { CartPizzaBlockProps } from "../CartPizzaBlock";
+import { useAppDispatch } from "../../redux/store";
 
 export type PizzaBlockProps = {
   id: number;
@@ -37,7 +38,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   const [activeType, setActiveType] = useState<number>(0);
   const [activeSize, setActiveSize] = useState<number>(0);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleAddClick = () => {
     const item: CartItem = {
       id,
