@@ -12,7 +12,6 @@ const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const handleClearClick = () => dispatch(clearPizzas());
 
-  // TODO: добавь 2 пиццы и убавь количество одной до нуля
   if (totalCount === 0) {
     return <CartEmpty />;
   }
