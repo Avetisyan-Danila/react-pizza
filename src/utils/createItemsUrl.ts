@@ -1,9 +1,10 @@
-// TODO: Переделать на TS
+import { SortPropertyEnum } from "../redux/slices/filterSlice";
+
 export default function createItemsUrl(
-  categoryId,
-  searchValue,
-  sortBy,
-  currentPage
+  categoryId: number,
+  searchValue: string,
+  sortBy: SortPropertyEnum,
+  currentPage: number
 ) {
   const url = new URL("https://64e6699c09e64530d17ff99d.mockapi.io/items");
   if (categoryId > 0) url.searchParams.append("category", `${categoryId}`);
