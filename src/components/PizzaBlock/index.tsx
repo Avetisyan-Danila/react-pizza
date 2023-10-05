@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  addPizza,
-  CartItem,
-  selectCartItemById,
-} from "../../redux/slices/cartSlice";
 import { CartPizzaBlockProps } from "../CartPizzaBlock";
 import { useAppDispatch } from "../../redux/store";
+import { selectCartItemById } from "../../redux/slices/cart/selectors";
+import { CartItem } from "../../redux/slices/cart/types";
+import { addPizza } from "../../redux/slices/cart/slice";
 
 export type PizzaBlockProps = {
   id: number;

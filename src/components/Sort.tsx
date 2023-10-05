@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  filterSelector,
-  OrderEnum,
-  setOrderBy,
-  setSort,
-} from "../redux/slices/filterSlice";
 import { SortItem, sortItems } from "../helpers/constants";
 import { useAppDispatch } from "../redux/store";
+import { filterSelector } from "../redux/slices/filter/selectors";
+import { OrderEnum } from "../redux/slices/filter/types";
+import { setOrderBy, setSort } from "../redux/slices/filter/slice";
 
 const Sort: React.FC = () => {
   const { sort, orderBy } = useSelector(filterSelector);

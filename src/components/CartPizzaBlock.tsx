@@ -1,10 +1,10 @@
+import React from "react";
+import { useAppDispatch } from "../redux/store";
 import {
   decreasePizzas,
   increasePizzas,
   removePizza,
-} from "../redux/slices/cartSlice";
-import React from "react";
-import { useAppDispatch } from "../redux/store";
+} from "../redux/slices/cart/slice";
 
 export type CartPizzaBlockProps = {
   id: number;

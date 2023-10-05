@@ -1,6 +1,7 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
 
+// TODO: Поправить вёрстку скелетона
 const Skeleton: React.FC = () => (
   <ContentLoader
     className="pizza-block"

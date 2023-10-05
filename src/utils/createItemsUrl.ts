@@ -1,4 +1,4 @@
-import { OrderEnum, SortPropertyEnum } from "../redux/slices/filterSlice";
+import { OrderEnum, SortPropertyEnum } from "../redux/slices/filter/types";
 
 export default function createItemsUrl(
   categoryId: number,

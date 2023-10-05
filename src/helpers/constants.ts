@@ -1,4 +1,4 @@
-import { SortPropertyEnum } from "../redux/slices/filterSlice";
+import { SortPropertyEnum } from "../redux/slices/filter/types";
 
 export type SortItem = {
   name: string;

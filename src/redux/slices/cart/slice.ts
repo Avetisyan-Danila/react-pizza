@@ -1,35 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { getCartFromLocalStorage } from "../../../utils/getCartFromLocalStorage";
+import { CartItem, CartSliceState } from "./types";
+import { calculateTotalPriceAndCount } from "../../../utils/calculateTotalPriceAndCount";
 
-export type CartItem = {
-  id: number;
-  title: string;
-  price: number;
-  imageUrl: string;
-  type: string;
-  size: number;
-  count: number;
-};
-
-interface CartSliceState {
-  items: CartItem[];
-  totalPrice: number;
-  totalCount: number;
-}
+const { items, totalPrice, totalCount } = getCartFromLocalStorage();
 
 const initialState: CartSliceState = {
-  items: [],
-  totalPrice: 0,
-  totalCount: 0,
-};
-
-const calculateTotalPriceAndCount = (items: CartItem[]) => {
-  const totalPrice = items.reduce(
-    (acc, pizza) => pizza.price * pizza.count + acc,
-    0
-  );
-  const totalCount = items.reduce((acc, pizza) => acc + pizza.count, 0);
-  return { totalPrice, totalCount };
+  items: items,
+  totalPrice: totalPrice,
+  totalCount: totalCount,
 };
 
 const findPizzaIndex = (items: CartItem[], payload: CartItem) =>
@@ -95,10 +74,6 @@ export const cartSlice = createSlice({
     },
   },
 });
-
-export const cartSelector = (state: RootState) => state.cart;
-export const selectCartItemById = (id: number) => (state: RootState) =>
-  state.cart.items.filter((pizza: CartItem) => pizza.id === id);
 
 export const {
   addPizza,

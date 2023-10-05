@@ -1,10 +1,11 @@
 import styles from "./Search.module.scss";
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { useSelector } from "react-redux";
-import { filterSelector, setSearchQuery } from "../../redux/slices/filterSlice";
 import { useAppDispatch } from "../../redux/store";
 import searchSVG from "../../assets/search.svg";
 import clearSVG from "../../assets/clear.svg";
+import { filterSelector } from "../../redux/slices/filter/selectors";
+import { setSearchQuery } from "../../redux/slices/filter/slice";
 
 const Search: React.FC = () => {
   const { searchQuery } = useSelector(filterSelector);

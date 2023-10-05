@@ -8,14 +8,13 @@ import qs from "qs";
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { filterSelector, setFilters } from "../redux/slices/filterSlice";
 import { sortItems } from "../helpers/constants";
-import {
-  FetchPizzaArgs,
-  fetchPizzas,
-  pizzasSelector,
-} from "../redux/slices/pizzasSlice";
 import { useAppDispatch } from "../redux/store";
+import { pizzasSelector } from "../redux/slices/pizza/selectors";
+import { filterSelector } from "../redux/slices/filter/selectors";
+import { fetchPizzas } from "../redux/slices/pizza/slice";
+import { FetchPizzaArgs } from "../redux/slices/pizza/types";
+import { setFilters } from "../redux/slices/filter/slice";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -77,6 +76,7 @@ const Home: React.FC = () => {
     }
   }, []);
 
+  // TODO: нужно как-то мемоизировать
   // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     if (!isSearch.current) {
