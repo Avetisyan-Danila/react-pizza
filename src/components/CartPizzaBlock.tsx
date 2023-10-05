@@ -19,15 +19,12 @@ export type CartPizzaBlockProps = {
 const CartPizzaBlock: React.FC<CartPizzaBlockProps> = (pizza) => {
   const dispatch = useAppDispatch();
 
-  // TODO: Передавать можно только id, а не весь объект пиццы
   const handleRemoveClick = (pizza: CartPizzaBlockProps) =>
     dispatch(removePizza(pizza));
 
-  // TODO: Передавать можно только id, а не весь объект пиццы
   const handleIncreaseClick = (pizza: CartPizzaBlockProps) =>
     dispatch(increasePizzas(pizza));
 
-  // TODO: Передавать можно только id, а не весь объект пиццы
   const handleDecreaseClick = (pizza: CartPizzaBlockProps) => {
     if (pizza.count === 1) return;
 
