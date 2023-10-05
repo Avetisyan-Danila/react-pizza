@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { useSelector } from "react-redux";
 import { filterSelector, setSearchQuery } from "../../redux/slices/filterSlice";
 import { useAppDispatch } from "../../redux/store";
+import searchSVG from "../../assets/search.svg";
+import clearSVG from "../../assets/clear.svg";
 
 const Search: React.FC = () => {
   const { searchQuery } = useSelector(filterSelector);
@@ -41,18 +43,14 @@ const Search: React.FC = () => {
         onChange={handleInputChange}
       />
 
-      <img
-        className={styles.icon}
-        src="img/search.svg"
-        alt="Поиск пиццы . . ."
-      />
+      <img className={styles.icon} src={searchSVG} alt="Поиск пиццы . . ." />
 
       <img
         className={`${styles.reset} ${
           inputValue ? `${styles.reset_active}` : ""
         }`}
         onClick={handleResetClick}
-        src="img/clear.svg"
+        src={clearSVG}
         alt="Очистить строку поиска"
       />
     </div>
