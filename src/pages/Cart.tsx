@@ -96,7 +96,10 @@ const Cart: React.FC = () => {
         </div>
         <div className="content__items">
           {items.map((pizza: CartPizzaBlockProps) => (
-            <CartPizzaBlock {...pizza} key={`${pizza.size}+${pizza.type}`} />
+            <CartPizzaBlock
+              {...pizza}
+              key={`${pizza.title}+${pizza.size}+${pizza.type}`}
+            />
           ))}
         </div>
         <div className="cart__bottom">
