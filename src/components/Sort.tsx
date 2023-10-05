@@ -1,12 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { filterSelector, setSort } from "../redux/slices/filterSlice";
-import { sortItems, SortItem } from "../helpers/constants";
+import {
+  filterSelector,
+  OrderEnum,
+  setOrderBy,
+  setSort,
+} from "../redux/slices/filterSlice";
+import { SortItem, sortItems } from "../helpers/constants";
 import { useAppDispatch } from "../redux/store";
 
 const Sort: React.FC = () => {
-  const { sort } = useSelector(filterSelector);
+  const { sort, orderBy } = useSelector(filterSelector);
   const dispatch = useAppDispatch();
+
+  const handleOrderByClick = () => {
+    const newOrderBy =
+      orderBy === OrderEnum.DESC ? OrderEnum.ASC : OrderEnum.DESC;
+    dispatch(setOrderBy(newOrderBy));
+  };
 
   const [isVisible, setIsVisible] = useState(false);
   const handleSortItemClick = (item: SortItem) => {
@@ -28,9 +39,9 @@ const Sort: React.FC = () => {
 
   return (
     <div ref={sortRef} className="sort">
-      <div className="sort__label sort__label--desc">
-        {/*TODO: Доделать сортировку по возрастанию/убыванию*/}
+      <div className={`sort__label sort__label--${orderBy}`}>
         <svg
+          onClick={() => handleOrderByClick()}
           width="10"
           height="6"
           viewBox="0 0 10 6"

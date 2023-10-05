@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   const isMounted = useRef(false);
 
   const { items, status } = useSelector(pizzasSelector);
-  const { categoryId, sort, currentPage, searchQuery } =
+  const { categoryId, sort, orderBy, currentPage, searchQuery } =
     useSelector(filterSelector);
 
   const getPizzas = () => {
@@ -35,6 +35,7 @@ const Home: React.FC = () => {
         categoryId,
         searchQuery,
         sortBy: sort.sortProperty,
+        orderBy,
         currentPage,
       })
     );
@@ -68,6 +69,7 @@ const Home: React.FC = () => {
           categoryId: params.categoryId,
           currentPage: params.currentPage,
           sort: sort || sortItems[0],
+          orderBy,
           searchQuery: params.searchQuery,
         })
       );
@@ -82,7 +84,7 @@ const Home: React.FC = () => {
     }
 
     isSearch.current = false;
-  }, [categoryId, sort, searchQuery, currentPage]);
+  }, [categoryId, sort, orderBy, searchQuery, currentPage]);
 
   const skeletons = [...new Array(8)].map((_, index) => (
     <Skeleton key={index} />
