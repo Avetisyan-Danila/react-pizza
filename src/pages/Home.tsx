@@ -114,7 +114,7 @@ const Home: React.FC = () => {
       ) : (
         <>
           <h2 className="content__title">Все пиццы</h2>
-          <div className={`${items.length !== 0 ? "content__items" : ""}`}>
+          <div className="content__items">
             {status === "loading" ? skeletons : pizzas}
           </div>
           {categoryId === 0 ? <Pagination /> : ""}
