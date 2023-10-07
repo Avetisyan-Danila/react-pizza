@@ -1,3 +1,10 @@
 import { RootState } from "../../store";
+import { createSelector } from "@reduxjs/toolkit";
 
-export const pizzasSelector = (state: RootState) => state.pizzas;
+const selectPizzas = (state: RootState) => state.pizzas;
+export const pizzasSelector = createSelector([selectPizzas], (pizzas) => {
+  return {
+    items: pizzas.items,
+    status: pizzas.status,
+  };
+});
